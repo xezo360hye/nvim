@@ -10,3 +10,4 @@ vim.pack.add {
 }
 
 require "guess-indent".setup {}
+require "oil".setup {}
