@@ -1,18 +1,28 @@
 local M = {}
 
 function M.setup(module, opts)
-  local loaded = false
   local instance = nil
-  return function()
-    if not loaded then
+
+  local function setup()
+    if instance == nil then
       instance = require(module)
       if instance.setup then
         instance.setup(opts or {})
       end
-      loaded = true
     end
-    return instance
   end
+
+  return setmetatable({}, {
+    __index = function(_, key)
+      setup()
+      return instance[key]
+    end,
+
+    __call = function(_, ...)
+      setup()
+      return instance(...)
+    end,
+  })
 end
 
 return M
