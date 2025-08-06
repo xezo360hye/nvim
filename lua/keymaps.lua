@@ -2,17 +2,31 @@ local lazy = require "lazy-load"
 local oil = lazy.setup "oil"
 local pick = lazy.setup "mini.pick"
 
-vim.keymap.set("n", "<Esc>",   "<Cmd>noh<CR>")
-vim.keymap.set("n", "<space>", "<nop>")
+local map = vim.keymap.set
 
-local function mapleader(lhs, rhs)
-   vim.keymap.set("n", "<leader>" .. lhs, rhs)
+local function mapn(lhs, rhs)
+   map("n", lhs, rhs)
 end
 
-mapleader("s",  "<Cmd>source<CR>")
-mapleader("w",  "<Cmd>write<CR>")
-mapleader("f",  function() vim.lsp.buf.format() end)
-mapleader("o",  function() oil().open() end)
-mapleader("pf", function() pick().builtin.files() end)
-mapleader("pg", function() pick().builtin.grep_live() end)
-mapleader("ph", function() pick().builtin.help() end)
+local function mapleader(lhs, rhs)
+   mapn("<leader>" .. lhs, rhs)
+end
+
+local function wincmd(action)
+   return function() vim.cmd.winc(action) end
+end
+
+mapn("<Esc>",   vim.cmd.noh)
+mapn("<space>", "<nop>")
+mapn("<C-h>",   wincmd "h")
+mapn("<C-j>",   wincmd "j")
+mapn("<C-k>",   wincmd "k")
+mapn("<C-l>",   wincmd "l")
+
+mapleader("s",  vim.cmd.source)
+mapleader("w",  vim.cmd.write)
+mapleader("f",  vim.lsp.buf.format)
+mapleader("o",  oil().open)
+mapleader("pf", pick().builtin.files)
+mapleader("pg", pick().builtin.grep_live)
+mapleader("ph", pick().builtin.help)
