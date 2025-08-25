@@ -40,31 +40,3 @@ vim.lsp.config("lua_ls", {
       },
    },
 })
-
-vim.api.nvim_create_autocmd("LspAttach", {
-   callback = function(event)
-      local highlight_augroup = vim.api.nvim_create_augroup("my.lsp-highlight", { clear = false })
-      vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
-         buffer = event.buf,
-         group = highlight_augroup,
-         callback = vim.lsp.buf.document_highlight,
-      })
-
-      vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter" }, {
-         buffer = event.buf,
-         group = highlight_augroup,
-         callback = vim.lsp.buf.clear_references,
-      })
-
-      vim.api.nvim_create_autocmd("LspDetach", {
-         group = vim.api.nvim_create_augroup("my.lsp-detach", { clear = true }),
-         callback = function(event2)
-            vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds {
-               group = highlight_augroup,
-               buffer = event2.buf,
-            }
-         end,
-      })
-   end,
-})
