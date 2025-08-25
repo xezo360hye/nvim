@@ -15,6 +15,7 @@ vim.pack.add({
 
    -- mini
    "https://github.com/echasnovski/mini.pick",
+   "https://github.com/echasnovski/mini.statusline",
    "https://github.com/echasnovski/mini.bracketed",
    "https://github.com/echasnovski/mini.surround",
    "https://github.com/echasnovski/mini.clue",
@@ -31,6 +32,12 @@ require "mini.bracketed".setup {}
 require "mini.surround".setup {}
 require "mini.move".setup {}
 require "mini.ai".setup {}
+
+local statusline = require "mini.statusline"
+statusline.setup { use_icons = true }
+statusline.section_location = function()
+   return "%2l:%-2v"
+end
 
 local miniclue = require "mini.clue"
 miniclue.setup({
