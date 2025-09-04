@@ -13,6 +13,7 @@ vim.pack.add({
    "https://github.com/hiphish/rainbow-delimiters.nvim",
    "https://github.com/folke/todo-comments.nvim",
    "https://github.com/folke/tokyonight.nvim",
+   "https://github.com/lewis6991/gitsigns.nvim",
 
    -- mini
    "https://github.com/echasnovski/mini.pick",
@@ -28,6 +29,9 @@ require "guess-indent".setup {}
 require "oil".setup {}
 
 require "todo-comments".setup {}
+require "gitsigns".setup {
+   attach_to_untracked = true,
+}
 
 require "mini.bracketed".setup {}
 require "mini.surround".setup {}
