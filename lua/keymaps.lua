@@ -16,7 +16,9 @@ local function wincmd(action)
    return function() vim.cmd.winc(action) end
 end
 
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
+vim.keymap.set("t",          "<Esc><Esc>", "<C-\\><C-n>")
+vim.keymap.set({ "n", "x" }, "<C-c>",      '"+y')
+
 mapn("<Esc>",   vim.cmd.noh)
 mapn("<space>", "<nop>")
 mapn("<C-h>",   wincmd "h")
